@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="MAIN" Id="{66967290-b03d-4e23-88bb-afb34909f44a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	//Inputs
+	fb_PIDController :	FB_PID;			
+	fIn	: LREAL;				
+	fKp	: LREAL := 0.5;				
+	fKi	: LREAL := 0.1;				
+	fKd	: LREAL := 0.01;				
+	fSatHigh : LREAL := 100.0;		
+	fSatLow	 : LREAL := -100.0;		
+	bReset: BOOL;	
+	
+	//Output 
+	fPIDOut	: LREAL;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fb_PIDController(nMethodType:= GVL_PID.nStep,
+				 fIn := fIn,
+				 fKp := fKp,
+				 fKi := fKi,
+				 fKd := fKd,
+				 fSatHigh := fSatHigh,
+				 fSatLow := fSatLow,
+				 bReset := bReset,
+				 fPIDOutput => fPIDOut);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="21" Count="7" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

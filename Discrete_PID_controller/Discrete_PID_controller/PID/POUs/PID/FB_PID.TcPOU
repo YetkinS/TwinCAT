@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_PID" Id="{bfcf9a8a-b53b-4357-9857-c5b96ee2cf35}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PID
+VAR_INPUT
+	nMethodType: SINT;		//Method tpye: '0' for initialization, '1' for start-up
+	fIn: LREAL;				//Controller input 
+	fKp: LREAL;				//Proportional gain
+	fKi: LREAL;				//Integral gain
+	fKd: LREAL;				//Derivative gain
+	fSatHigh : LREAL;		//High saturation limit
+	fSatLow	 : LREAL;		//Low saturation limit	
+	bReset: BOOL;			//PID internal reset
+END_VAR
+VAR_OUTPUT
+	fPidOutput: LREAL;	
+END_VAR
+VAR
+	rtb_Sum: LREAL;
+	rtb_TSamp: LREAL;
+	UD_DSTATE: LREAL;
+	Integrator_PrevResetState: SINT;
+	Integrator_DState: LREAL;
+	UD_Reset_ZCE: USINT := 1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nMethodType OF
+    nInitialize: 
+       //Initialize conditions for discrete integrator
+        Integrator_DState := 0.0;
+        Integrator_PrevResetState := 2;
+        //InitializeConditions for delay
+        UD_DSTATE := 0.0;
+    nStep: 
+        //Discrete integrator
+        IF bReset AND (Integrator_PrevResetState <= 0) THEN 
+            Integrator_DState := 0.0;
+        END_IF;
+        
+        // y = u * K where K = 1 / ( w * Ts ) *)
+        rtb_TSamp := (fIn * fKd) * 20.0;  
+
+        IF bReset AND (UD_Reset_ZCE <> 1) THEN 
+            UD_DSTATE := 0.0;
+        END_IF;
+
+        UD_Reset_ZCE := BOOL_TO_USINT(bReset);
+        
+        rtb_Sum := ((fIn * fKp) + Integrator_DState) + (rtb_TSamp - UD_DSTATE);		
+        
+		// Saturation limits
+        IF rtb_Sum >= fSatHigh THEN 
+            fPidOutput := fSatHigh;
+        ELSIF rtb_Sum > fSatLow THEN 
+            fPidOutput := rtb_Sum;
+        ELSE 
+            fPidOutput := 0.0;
+        END_IF;       
+
+        // Update for discrete integrator        
+        Integrator_DState := (((fIn * fKi) + (fPidOutput - rtb_Sum)) * 0.05) + Integrator_DState;
+
+        IF bReset THEN 
+            Integrator_PrevResetState := 1;
+        ELSE 
+            Integrator_PrevResetState := 0;
+        END_IF;       
+
+        //Update for delay
+        UD_DSTATE := rtb_TSamp;
+END_CASE;
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_PID">
+      <LineId Id="5" Count="8" />
+      <LineId Id="15" Count="2" />
+      <LineId Id="22" Count="2" />
+      <LineId Id="26" Count="5" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="40" Count="6" />
+      <LineId Id="53" Count="1" />
+      <LineId Id="58" Count="6" />
+      <LineId Id="68" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
