@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <GVL Name="GVL_ZeroSpanCalibration" Id="{bb8c3462-cd3c-4f34-a40a-a3bc9674890c}">
+    <Declaration><![CDATA[VAR_GLOBAL CONSTANT
+	nInitialize: SINT := 0;
+	nStep: SINT := 1;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

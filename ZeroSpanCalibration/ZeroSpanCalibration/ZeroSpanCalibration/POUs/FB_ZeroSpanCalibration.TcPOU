@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_ZeroSpanCalibration" Id="{615a2bff-99ef-4427-a455-5c657fdf4edf}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ZeroSpanCalibration
+VAR_INPUT
+	nMethodType: SINT;	//Method tpye: '0' for initialization, '1' for start-up
+	fIn: LREAL;			//Instrument input. e.g. sensor input, valve input
+END_VAR
+VAR_OUTPUT	
+	f_y1y2: LREAL;		//If the signal is rising then zero error (y1). If the signal is falling then span error (y2).
+END_VAR
+VAR
+	rtb_TSamp: LREAL;
+	rtb_Diff: LREAL;
+	rtb_Compare: BOOL;
+	rtb_Compare_o: BOOL;
+	UD_DSTATE: LREAL;
+	DelayInput1_DSTATE: BOOL;
+	DelayInput1_DSTATE_a: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nMethodType OF
+    nInitialize: 
+        // Initialize conditions for unit delay   
+        UD_DSTATE := 0.0;
+        DelayInput1_DSTATE := FALSE;
+        DelayInput1_DSTATE_a := FALSE;        
+        // Initialize condition for the system output
+        f_y1y2 := 0.0;      
+    nStep:       
+        //y = u * K where K = 1 / ( w * Ts ) *)
+        rtb_TSamp := fIn * 20.0;       
+        rtb_Diff := rtb_TSamp - UD_DSTATE;   
+        rtb_Compare := rtb_Diff > 0.0;      
+        rtb_Compare_o := rtb_Diff < 0.0;        
+
+        IF UDINT_TO_DINT(BOOL_TO_UDINT(BOOL_TO_DINT(rtb_Compare) > BOOL_TO_DINT(DelayInput1_DSTATE)) + BOOL_TO_UDINT(BOOL_TO_DINT(rtb_Compare_o) > BOOL_TO_DINT(DelayInput1_DSTATE_a))) = 1 THEN 
+        	f_y1y2 := fIn;           
+        END_IF;
+        UD_DSTATE := rtb_TSamp;   
+        DelayInput1_DSTATE := rtb_Compare;
+        DelayInput1_DSTATE_a := rtb_Compare_o;
+END_CASE;
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ZeroSpanCalibration">
+      <LineId Id="5" Count="2" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="69" Count="2" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="97" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
