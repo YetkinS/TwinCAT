@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_PulseGen" Id="{73938b04-c2e6-4a6d-951e-91f4358f998c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PulseGen
+    VAR_INPUT
+        IN : BOOL;
+        PT_ON : TIME;
+        PT_OFF : TIME;
+    END_VAR
+    VAR_OUTPUT
+		ET : TIME;
+        Q : BOOL;        
+    END_VAR
+    VAR
+        rtIN : R_TRIG;
+        tonBlink : TON;
+    END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[rtIN(CLK := IN);
+IF tonBlink.Q OR rtIN.Q THEN
+    (*Toggle Output*)
+    Q := NOT Q;    
+    (*Timer Reset call, important to call timer twice in same cycle for correct Blink Time*)
+    tonBlink(IN:= FALSE);    
+    (*Set corresponding Time*)
+    IF Q THEN
+        tonBlink.PT := PT_ON;
+    ELSE
+        tonBlink.PT := PT_OFF;
+    END_IF    
+END_IF
+(*Timer Run call*)
+tonBlink(IN:= IN);
+
+IF IN THEN
+    ET := tonBlink.ET;
+ELSE
+    ET := T#0S;
+    Q := FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_PulseGen">
+      <LineId Id="23" Count="0" />
+      <LineId Id="25" Count="2" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="32" Count="5" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="41" Count="7" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="MAIN" Id="{27aaebf8-6fda-45d8-9038-d5e2a0732680}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+bCalibrate:	BOOL;
+fFB: REAL;
+fStepValue: REAL :=0.5;
+fDev: REAL := 0.1;	
+fCmd: REAL;
+fCommandZeroError:	REAL;
+fCommandSpanError:	REAL;
+fFeedbackZeroError:	REAL;
+fFeedbackSpanError: REAL;  
+bCalibrationFinished: BOOL;
+bError : BOOL;
+bBusy : BOOL;
+bDoubleCheck : BOOL;
+fbAutoCalibration : FB_AutoCalibration;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbAutoCalibration(bCalibrate:=bCalibrate,
+				fFB := fFB,
+				fStepValue:=fStepValue,
+				fDev:=fDev,
+				fBand:=0.2);
+
+fCmd:= fbAutoCalibration.fCmd;
+				
+fCommandZeroError:= fbAutoCalibration.fCmdZeroErr;
+
+fCommandSpanError:= fbAutoCalibration.fCmdSpanErr;
+
+fFeedbackZeroError:= fbAutoCalibration.fFBZeroErr;
+
+fFeedbackSpanError:= fbAutoCalibration.fFBSpanErr;
+
+bCalibrationFinished:=fbAutoCalibration.bCalibrationFinished;
+
+bError := fbAutoCalibration.bError;
+
+bBusy := fbAutoCalibration.bBusy;
+
+bDoubleCheck := fbAutoCalibration.bDoubleCheck;
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="21" Count="22" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

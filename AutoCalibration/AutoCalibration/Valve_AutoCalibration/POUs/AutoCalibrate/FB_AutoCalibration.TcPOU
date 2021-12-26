@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_AutoCalibration" Id="{e77db616-cdc1-4d22-a554-23e068086b3c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AutoCalibration
+VAR_INPUT	
+	bCalibrate:	BOOL; 	 //Calibration is ON
+	fFB: REAL;			 //Valve feedback
+	fStepValue: REAL;	 //Step value for the control valve
+	fDev: REAL;			 //Deviation value to be catched in the feedback signal after the control valve stepped up
+	fBand: REAL;		 //Acceptable deviation in the feedback for the double check
+END_VAR
+VAR_OUTPUT
+	fCmd: REAL;					//Valve control signal
+	fCmdZeroErr: REAL;			//Control singal zero error
+	fCmdSpanErr: REAL;			//Control singal span error
+	fFBZeroErr:	REAL;			//Feedback signal zero error
+	fFBSpanErr: REAL;  			//Feedback span error	
+	bCalibrationFinished: BOOL;	//Calibration completed
+	bDoubleCheck: BOOL;			//True: Double check succesfful, FALSE: Double check failed 
+	bBusy: BOOL;				//Calibration is working
+	bError: BOOL;				//Error, if the valve does not open, close or exceeds the min/max values
+END_VAR
+VAR	
+	bZeroErrCalibComplet: BOOL;
+	bSpanErrCalibComplet: BOOL;
+	fbPulseGenZeroErr : FB_PulseGen;
+	fbPulseGenSpanErr : FB_PulseGen;
+	fCmdPrevState : REAL;
+	fFBPrevState : REAL;	
+	RTrigCalibON : R_TRIG;	
+	RTrigZero : R_TRIG;
+	RTrigSpan : R_TRIG;
+	bValveClosed : BOOL;
+	bValveOpened : BOOL;
+	bDoubleCheckFail  : BOOL;
+	_fbTimerValveClosing: TON;
+	_fbTimerValveOpening : TON;
+	_bClosingTimer : BOOL;	
+	_bOpeningTimer : BOOL;	
+	_fbTimerDoubleCheck : TON;
+	_bTimerDoubleCheck : BOOL;	
+	_fbTimerOnMinFB	: TON;
+	_fbTimerOnMaxFB	: TON;
+	_bMinFBChecked : BOOL;
+	_bMaxFBChecked : BOOL;
+END_VAR
+VAR CONSTANT
+	fMinPos: REAL := 0.0;
+	fMaxPos: REAL := 100.0;
+	tPtON: TIME := T#0.01S;
+	tPtOFF: TIME := T#5S;
+	_tCloseValve: TIME := T#20S;		//20 seconds for closing the valve
+	_tOpenValve: TIME := T#120S;		//120 seconds for opening the valve
+	_fMinFB: REAL := 3.0;				//Min Input signal 4mA +- %2
+	_fMaxFB: REAL := 96.04;				//Max Input signal 19.6mA +- %2
+	_tDoubleCheck : TIME := T#150S;		//Max time for completing the double check (120s opening + 20s closing + 10s on FB check)	
+	_tDelay : TIME := T#5S;				//Time for on setpoint check
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Initialization for the next calibration cycle
+RTrigCalibON(CLK:= bCalibrate);
+IF RTrigCalibON.Q AND NOT bBusy THEN		
+	fFBPrevState := fFB;	
+	fCmdZeroErr:= 0.0;
+	fCmdSpanErr:= 0.0;
+	fFBZeroErr:= 0.0;
+	fFBSpanErr:= 0.0;
+	bDoubleCheck:= FALSE;
+	bDoubleCheckFail:= FALSE;
+	bError := FALSE;	
+	bBusy := TRUE;		
+	bZeroErrCalibComplet := FALSE;
+	bSpanErrCalibComplet := FALSE;
+	bCalibrationFinished:= FALSE;	
+	bValveClosed  := FALSE;
+	bValveOpened  := FALSE;
+	_bClosingTimer := TRUE;	
+	_bOpeningTimer := FALSE;
+	_bTimerDoubleCheck:= TRUE;	
+	_bMinFBChecked := FALSE;
+	_bMaxFBChecked := FALSE;
+END_IF
+
+//Zero error
+CloseValve();
+IF bValveClosed AND NOT bZeroErrCalibComplet THEN
+	ZeroErrorCalibration();
+END_IF
+
+//Span error 	
+OpenValve();
+IF bValveOpened AND NOT bSpanErrCalibComplet THEN
+	SpanErrorCalibration();
+END_IF
+
+//Double check	
+IF bZeroErrCalibComplet AND bSpanErrCalibComplet THEN	
+	DoubleCheck();			
+END_IF
+
+//Calibration completed
+IF bDoubleCheck OR bDoubleCheckFail THEN
+	bCalibrationFinished:= TRUE;	
+	bBusy:= FALSE;	
+ELSIF bError THEN	
+	bCalibrationFinished:= FALSE;				
+	bBusy:= FALSE;				
+END_IF		
+
+
+
+]]></ST>
+    </Implementation>
+    <Method Name="CloseValve" Id="{5e3f797d-98af-46fc-ad98-0c300c587d05}">
+      <Declaration><![CDATA[METHOD CloseValve 
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_fbTimerValveClosing(IN:=_bClosingTimer,PT:=_tCloseValve);
+IF NOT bValveClosed THEN
+	fCmd:= fMinPos;
+	IF _fbTimerValveClosing.Q AND (fFB < _fMinFB) THEN
+		_bClosingTimer:=FALSE;
+		bValveClosed := TRUE;		
+	ELSIF _fbTimerValveClosing.Q AND NOT bValveClosed THEN		
+		_bClosingTimer:=FALSE;	
+		bError := TRUE;
+	END_IF
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DoubleCheck" Id="{c1e51d5e-a452-4b0d-a015-c644049849d6}">
+      <Declaration><![CDATA[METHOD DoubleCheck
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_fbTimerDoubleCheck(IN:=_bTimerDoubleCheck, PT:= _tDoubleCheck);
+IF NOT _fbTimerDoubleCheck.Q THEN
+	IF NOT _bMinFBChecked THEN
+		fCmd:= fMinPos;
+		IF fFB > (fFBZeroErr - fBand) AND fFB < (fFBZeroErr + fBand) THEN			
+			_fbTimerOnMinFB(IN:=TRUE,PT:=_tDelay);				
+		ELSE
+			_fbTimerOnMinFB(IN:=FALSE);
+		END_IF
+		_bMinFBChecked:= _fbTimerOnMinFB.Q;
+	ELSIF _bMinFBChecked AND NOT _bMaxFBChecked THEN
+		fCmd:= fMaxPos;
+		IF fFB > ((fMaxPos - fFBSpanErr) - fBand) AND fFB < ((fMaxPos - fFBSpanErr) + fBand) THEN			
+			_fbTimerOnMaxFB(IN:=TRUE,PT:=_tDelay);	
+		ELSE
+			_fbTimerOnMaxFB(IN:=FALSE);
+		END_IF
+			_bMaxFBChecked:= _fbTimerOnMaxFB.Q;	
+	ELSIF _bMinFBChecked AND _bMaxFBChecked THEN
+			_bTimerDoubleCheck := FALSE;
+			bDoubleCheck:= TRUE;
+	END_IF	
+ELSE
+	_bTimerDoubleCheck := FALSE;	
+	bDoubleCheckFail:= TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OpenValve" Id="{f3290457-71c8-4696-9a86-ae40b0543187}">
+      <Declaration><![CDATA[METHOD OpenValve 
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_fbTimerValveOpening(IN:=_bOpeningTimer,PT:=_tOpenValve);
+IF NOT bValveOpened and bZeroErrCalibComplet THEN
+	fCmd:= fMaxPos;
+	IF _fbTimerValveOpening.Q AND (fFB >_fMaxFB) THEN		
+		_bOpeningTimer:=FALSE;	
+		bValveOpened:= TRUE;
+	ELSIF _fbTimerValveOpening.Q AND NOT bValveOpened THEN
+		_bOpeningTimer:=FALSE;	
+		bError := TRUE;		
+	END_IF	
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SpanErrorCalibration" Id="{05a85f94-d961-4373-8da5-20dea43f3ab6}">
+      <Declaration><![CDATA[METHOD SpanErrorCalibration
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbPulseGenSpanErr(In:= NOT bSpanErrCalibComplet,Pt_ON:=tPtON, Pt_OFF:=tPtOFF);		
+RTrigSpan(CLK:=fbPulseGenSpanErr.Q);
+IF (fCmd <= fMinPos) THEN
+	bError := TRUE;
+ELSIF RTrigSpan.Q THEN
+	fCmdPrevState:= fCmd;
+	fFBPrevState:= fFB;
+	fCmd := fCmd - fStepValue;
+ELSIF (fFBPrevState - fFB >= fDev) THEN
+	fCmdSpanErr:= fMaxPos - fCmdPrevState;
+	fFBSpanErr:= fMaxPos - fFBPrevState;		
+	bSpanErrCalibComplet:= TRUE;							
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ZeroErrorCalibration" Id="{02abf20e-04cd-4333-a759-b02e6e3c5a18}">
+      <Declaration><![CDATA[METHOD ZeroErrorCalibration
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbPulseGenZeroErr(In:= NOT bZeroErrCalibComplet,Pt_ON:=tPtON, Pt_OFF:=tPtOFF);	  
+RTrigZero(CLK:=fbPulseGenZeroErr.Q);
+IF (fCmd >= fMaxPos) THEN
+	bError := TRUE;
+ELSIF RTrigZero.Q AND(fCmd <= fMaxPos) THEN
+	fCmdPrevState := fCmd;
+	fFBPrevState:= fFB;
+	fCmd := fCmd + fStepValue;	
+ELSIF(fFB - fFBPrevState >= fDev) THEN
+	fCmdZeroErr:= fCmdPrevState;
+	fFBZeroErr:= fFBPrevState;			
+	bZeroErrCalibComplet:= TRUE;
+	_bOpeningTimer := TRUE;			
+END_IF	]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_AutoCalibration">
+      <LineId Id="1197" Count="28" />
+      <LineId Id="1251" Count="0" />
+      <LineId Id="1227" Count="0" />
+      <LineId Id="1311" Count="0" />
+      <LineId Id="1229" Count="13" />
+      <LineId Id="1255" Count="0" />
+      <LineId Id="1243" Count="4" />
+      <LineId Id="219" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AutoCalibration.CloseValve">
+      <LineId Id="31" Count="3" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AutoCalibration.DoubleCheck">
+      <LineId Id="18" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="24" Count="2" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="63" Count="2" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="59" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AutoCalibration.OpenValve">
+      <LineId Id="6" Count="3" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="12" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AutoCalibration.SpanErrorCalibration">
+      <LineId Id="6" Count="1" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="8" Count="7" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AutoCalibration.ZeroErrorCalibration">
+      <LineId Id="6" Count="1" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="8" Count="6" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
