@@ -1,3 +1,3 @@
 # TwinCAT
 
-This is repository contains some example projects
+This repository contains some example projects
