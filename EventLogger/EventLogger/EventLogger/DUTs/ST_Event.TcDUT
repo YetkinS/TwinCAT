@@ -6,7 +6,7 @@ STRUCT
 	eEventType : E_Type;
 	eEventSeverity : TCEventSeverity;
 	nEventDefinition : UINT;
-	sEventMessage : STRING(100);
+	sEventMessage : STRING(255);
 	tTimeStamp : DATE_AND_TIME;	
 END_STRUCT
 END_TYPE
