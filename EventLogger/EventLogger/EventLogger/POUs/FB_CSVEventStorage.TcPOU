@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_CSVEventStorage" Id="{4607d0b1-970b-4d0f-bcad-4a4b0c2eaa5d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_CSVEventStorage IMPLEMENTS I_CSVEventStorage
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="StoreEvent" Id="{1c687bfc-bfa1-465f-b608-95184f3e00b0}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD StoreEvent
+VAR_INPUT
+	stEvent	: ST_Event;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_CSVEventStorage">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_CSVEventStorage.StoreEvent">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

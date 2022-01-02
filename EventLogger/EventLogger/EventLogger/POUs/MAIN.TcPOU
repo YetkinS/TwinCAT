@@ -5,9 +5,9 @@
 VAR	
 	//Test event
 	stEvent : ST_Event;	
-	
 	bAddEvent : BOOL;
-	fbEventLogger : FB_EventLogger;
+	CSVEventStorage : FB_CSVEventStorage;	
+	fbEventLogger : FB_EventLogger(CSVEventStorage);
 END_VAR
 ]]></Declaration>
     <Implementation>

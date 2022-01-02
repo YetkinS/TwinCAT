@@ -5,6 +5,7 @@
 VAR
 	aEventBuffer : ARRAY[1..nBufferSize] OF ST_Event;
 	nBufferIndex : INT := 0;
+	_iCSVEventStorage : I_CSVEventStorage;	
 END_VAR
 
 VAR CONSTANT
@@ -31,7 +32,10 @@ END_VAR
 	AddEvent := TRUE;	
 ELSE
 	AddEvent := FALSE; 
-END_IF]]></ST>
+END_IF
+
+//Store event in the CSV file
+_iCSVEventStorage.StoreEvent(stEvent := aEventBuffer[nBufferIndex]);]]></ST>
       </Implementation>
     </Method>
     <Method Name="CheckEventBuffer" Id="{116f5a3d-bbf6-4d1d-b3a2-4918d4adfba1}">
@@ -48,6 +52,18 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="FB_init" Id="{55f63a4e-b746-4e36-89fe-444010d56774}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	iCSVEventStorage : I_CSVEventStorage;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_iCSVEventStorage := iCSVEventStorage;]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_EventLogger">
       <LineId Id="9" Count="0" />
     </LineIds>
@@ -59,11 +75,17 @@ END_IF]]></ST>
       <LineId Id="14" Count="0" />
       <LineId Id="11" Count="1" />
       <LineId Id="10" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="0" />
     </LineIds>
     <LineIds Name="FB_EventLogger.CheckEventBuffer">
       <LineId Id="7" Count="1" />
       <LineId Id="10" Count="1" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_EventLogger.FB_init">
+      <LineId Id="7" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <Itf Name="I_CSVEventStorage" Id="{1e0e33f4-713c-4e83-82e8-e09af57ab57f}">
+    <Declaration><![CDATA[INTERFACE I_CSVEventStorage
+]]></Declaration>
+    <Method Name="StoreEvent" Id="{94b4fd0d-06ca-4453-a47c-75dcbba0311e}">
+      <Declaration><![CDATA[METHOD StoreEvent
+VAR_INPUT
+	stEvent : ST_Event;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
