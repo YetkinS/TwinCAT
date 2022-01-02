@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_EventLogger" Id="{4eea4031-622c-4f75-af55-a3cf5f6a3ee8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EventLogger
+VAR
+	aEventBuffer : ARRAY[1..nBufferSize] OF ST_Event;
+	nBufferIndex : INT := 0;
+END_VAR
+
+VAR CONSTANT
+	nBufferSize : INT := 50;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AddEvent" Id="{15e7c2bd-9dd2-496e-8af8-4b2cd3621b9e}">
+      <Declaration><![CDATA[METHOD PUBLIC AddEvent : BOOL
+VAR_IN_OUT
+	stEvent : ST_Event;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT CheckEventBuffer() THEN
+	nBufferIndex := nBufferIndex + 1;
+	aEventBuffer[nBufferIndex].eEventType := stEvent.eEventType;
+	aEventBuffer[nBufferIndex].eEventSeverity:= stEvent.eEventSeverity;
+	aEventBuffer[nBufferIndex].nEventDefinition := stEvent.nEventDefinition;
+	aEventBuffer[nBufferIndex].sEventMessage := stEvent.sEventMessage;
+	F_EventTimeStamp(aEventBuffer[nBufferIndex]);
+	AddEvent := TRUE;	
+ELSE
+	AddEvent := FALSE; 
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CheckEventBuffer" Id="{116f5a3d-bbf6-4d1d-b3a2-4918d4adfba1}">
+      <Declaration><![CDATA[(*Returns True if event buffer full, False otherwise*)
+METHOD PRIVATE CheckEventBuffer : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (nBufferIndex + 1 > nBufferSize) THEN
+	CheckEventBuffer := TRUE;
+ELSE
+	CheckEventBuffer := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_EventLogger">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_EventLogger.AddEvent">
+      <LineId Id="8" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="21" Count="3" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_EventLogger.CheckEventBuffer">
+      <LineId Id="7" Count="1" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

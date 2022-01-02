@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="F_EventTimeStamp" Id="{803a4ffa-4675-47f5-bef6-21aa213b69b6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_EventTimeStamp
+VAR_IN_OUT
+	stEvent : ST_Event;
+END_VAR
+VAR
+	stFileTime : T_FILETIME;
+	fbGetSystemTime : GETSYSTEMTIME;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbGetSystemTime(timeLoDW => stFileTime.dwLowDateTime, timeHiDW => stfiletime.dwHighDateTime);
+stEvent.tTimeStamp := FileTime_To_Dt(filetime := stFileTime);
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_EventTimeStamp">
+      <LineId Id="7" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

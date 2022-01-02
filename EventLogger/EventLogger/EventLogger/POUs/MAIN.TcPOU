@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="MAIN" Id="{efb1ca19-16d2-4253-8de9-e64b3dd80f65}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR	
+	//Test event
+	stEvent : ST_Event;	
+	
+	bAddEvent : BOOL;
+	fbEventLogger : FB_EventLogger;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Assign event values
+stEvent.eEventType := E_Type.alarm;
+stEvent.eEventSeverity := TCEventSeverity.Critical;
+stEvent.nEventDefinition := 30;
+stEvent.sEventMessage := 'Something went wrong';
+
+//Run only once to add an event
+IF  NOT bAddEvent THEN
+	fbEventLogger.AddEvent(stEvent);
+	bAddEvent := TRUE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="52" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="28" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
