@@ -1,2 +1,2 @@
-A simple event logger design, futher functions can be added. 
+A sample event logger design, further functionality will be added. The events are written into a log file as CSV format.
 
