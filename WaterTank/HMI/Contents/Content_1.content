@@ -1,0 +1,62 @@
+﻿<div id="Content_1" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="100" data-tchmi-height="100" data-tchmi-width-unit="%" data-tchmi-height-unit="%">
+
+
+<script data-tchmi-target-attribute="data-tchmi-background-color" type="application/json">
+{
+  "color": "rgba(214, 219, 233, 1)"
+}
+</script>
+<div id="TcHmi_Controls_Beckhoff_TcHmiTrendLineChart" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTrendLineChart"   data-tchmi-end="Latest" data-tchmi-height="80" data-tchmi-height-unit="%" data-tchmi-left="10" data-tchmi-left-unit="%" data-tchmi-start="First" data-tchmi-top-unit="%" data-tchmi-width="80" data-tchmi-width-unit="%" data-tchmi-x-axis-name="x-axis 1" data-tchmi-x-sub-tick-steps="4" data-tchmi-y-sub-tick-steps="4" data-tchmi-top="10" data-tchmi-right-unit="px">
+<script data-tchmi-target-attribute="data-tchmi-y-axis" type="application/json">
+[
+  {
+    "id": 1,
+    "position": "Left",
+    "labelFontColor": {
+      "color": "#4794da"
+    },
+    "showLabels": true,
+    "axisColor": {
+      "color": "#4794da"
+    },
+    "mainTickMinValue": 0,
+    "mainTickMaxValue": 100,
+    "showAxisName": true,
+    "axisName": "y-axis 1",
+    "axisNameFontFamily": null,
+    "axisNameFontSize": 15,
+    "axisNameFontSizeUnit": "px",
+    "axisNameFontWeight": "Bold",
+    "axisNameFontColor": {
+      "color": "#4794da"
+    },
+    "decimalPlaces": 2,
+    "autoScaling": false
+  }
+]
+</script>
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "%s%PLC1.ModelExecution.fPlantOut%/s%",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%TcHmi_Controls_Beckhoff_TcHmiTrendLineChart::YAxis%/ctrl%",
+        "value": {
+          "objectType": "Symbol",
+          "valueType": "tchmi:general#/definitions/String",
+          "symbolExpression": "%s%PLC1.ModelExecution.fPlantOut%/s%"
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+</div>

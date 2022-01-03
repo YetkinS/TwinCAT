@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_PI" Id="{0aa1776b-29e4-45c6-9c54-b668de9c997d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PI
+VAR_INPUT
+	ssMethodType: SINT;
+	fErr: LREAL;
+	fP: LREAL;
+	fI: LREAL;
+END_VAR
+VAR_OUTPUT
+	fOut: LREAL;
+END_VAR
+VAR
+	Integrator_DSTATE: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE ssMethodType OF
+    SS_INITIALIZE:         
+        Integrator_DSTATE := 0.0;
+    SS_STEP:       
+        fOut := (fErr * fP) + Integrator_DSTATE;        
+        Integrator_DSTATE := ((fErr * fI) * 0.01) + Integrator_DSTATE;
+END_CASE;
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_PI">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="17" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
