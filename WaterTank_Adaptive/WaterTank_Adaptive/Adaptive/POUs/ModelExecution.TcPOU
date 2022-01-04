@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="ModelExecution" Id="{fc05889d-3cdc-4f5d-a880-5ec1823a5239}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ModelExecution
+VAR
+	//Plant variables
+	fbAdaptiveModel:FB_AdaptiveModel(oid:=16#01010010);	
+	fSetPoint : LREAL := 10.0;
+	fPlantOut : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//By calling this program, TcCOM model of the nonlinear watertank model is executed.
+IF(fbAdaptiveModel.State=TCOM_STATE.TCOM_STATE_OP) THEN
+	//input to model
+	fbAdaptiveModel.stInput.In1:= fSetPoint;	
+	//execute module code
+	fbAdaptiveModel.Execute();
+	//model output
+	fPlantOut:=fbAdaptiveModel.stOutput.Out1;
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="ModelExecution">
+      <LineId Id="109" Count="8" />
+      <LineId Id="42" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

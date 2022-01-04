@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <DUT Name="ST_AdaptiveModel_Input" Id="{455317c3-d171-4310-9508-b20f394d8937}">
+    <Declaration><![CDATA[TYPE ST_AdaptiveModel_Input :
+STRUCT
+	In1: LREAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

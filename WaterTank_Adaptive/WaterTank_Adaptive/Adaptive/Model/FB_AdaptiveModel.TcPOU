@@ -1,0 +1,1144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_AdaptiveModel" Id="{a6ab8a44-a852-42af-80fd-c3d3fe287326}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'TcDependOnClassFactory' := 'AdaptiveModel'}
+FUNCTION_BLOCK FB_AdaptiveModel EXTENDS FB_TcMatSimObject
+VAR_INPUT
+	stInput: ST_AdaptiveModel_Input;
+END_VAR
+VAR_OUTPUT
+	stOutput: ST_AdaptiveModel_Output;
+END_VAR
+VAR
+	stInitData: ST_AdaptiveModelInitData;
+	arrDataAreas: ARRAY[1..2] OF ST_TcMatSimObjectDataAreaInfo;
+	bParametersVerified: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="CallBy_Online" Id="{109b1e8f-7751-4160-a785-15d984aca64e}">
+      <Declaration><![CDATA[PROPERTY CallBy_Online : TctModuleCallByType
+]]></Declaration>
+      <Get Name="Get" Id="{ca45a7a1-4502-4c05-a43f-df1aaebc12e5}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#00000000,sizeof(CallBy_Online),adr(CallBy_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{13e8af76-884c-4724-bd1a-7feecd9d0bf4}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#00000000,sizeof(CallBy_Online),adr(CallBy_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="CallBy_Startup" Id="{0ae4d19f-846e-48af-ba49-a1cc73a0d033}">
+      <Declaration><![CDATA[PROPERTY CallBy_Startup : TctModuleCallByType
+]]></Declaration>
+      <Get Name="Get" Id="{4ecb1fcd-6561-4867-ad35-9045cb4e54c1}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CallBy_Startup := stInitData.CallBy;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{1fcca83c-36eb-4cc6-b1b6-b9873a31b7a0}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.CallBy := CallBy_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskCycleTimeNs_Online" Id="{4ea18929-be17-4391-a1fa-1d723d169c92}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskCycleTimeNs_Online : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{2c16c907-378c-4bcc-82bb-2e806fc58380}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#03002080,sizeof(ContextInfoArr_0_TaskCycleTimeNs_Online),adr(ContextInfoArr_0_TaskCycleTimeNs_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{ba78a6df-49a4-4f28-b0e9-6592c7e61800}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#03002080,sizeof(ContextInfoArr_0_TaskCycleTimeNs_Online),adr(ContextInfoArr_0_TaskCycleTimeNs_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskCycleTimeNs_Startup" Id="{179f870b-1688-418c-8716-ee37158845a5}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskCycleTimeNs_Startup : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{293fb667-1dde-48dc-9dad-6b128d3b9373}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ContextInfoArr_0_TaskCycleTimeNs_Startup := stInitData.ContextInfoArr_0_TaskCycleTimeNs;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{09716761-136c-4e79-9feb-4d6d56b5a286}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.ContextInfoArr_0_TaskCycleTimeNs := ContextInfoArr_0_TaskCycleTimeNs_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskOid_Online" Id="{3697d5df-12bd-4fee-9e60-c8b6e58b1123}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskOid_Online : OTCID
+]]></Declaration>
+      <Get Name="Get" Id="{0e6dec79-93ce-4469-97be-d453f783c730}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#03002060,sizeof(ContextInfoArr_0_TaskOid_Online),adr(ContextInfoArr_0_TaskOid_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{1c3f959f-5450-41a1-93a5-c9a03381fb23}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#03002060,sizeof(ContextInfoArr_0_TaskOid_Online),adr(ContextInfoArr_0_TaskOid_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskOid_Startup" Id="{adae3289-1a87-4b84-a8be-1cbd54aa702c}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskOid_Startup : OTCID
+]]></Declaration>
+      <Get Name="Get" Id="{5613c7c7-6c7b-4238-bff1-115617ef1cb6}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ContextInfoArr_0_TaskOid_Startup := stInitData.ContextInfoArr_0_TaskOid;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{39db2130-e645-4ecc-8f98-c762b44a2db3}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.ContextInfoArr_0_TaskOid := ContextInfoArr_0_TaskOid_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskPort_Online" Id="{d47d5a7c-aea5-4ff4-b48c-17a6c623b082}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskPort_Online : UINT
+]]></Declaration>
+      <Get Name="Get" Id="{0c12663d-f018-4ebe-9a17-70953a1ffb63}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#03002090,sizeof(ContextInfoArr_0_TaskPort_Online),adr(ContextInfoArr_0_TaskPort_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c4b7422d-f6b7-4a08-a742-ad5a52ad520c}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#03002090,sizeof(ContextInfoArr_0_TaskPort_Online),adr(ContextInfoArr_0_TaskPort_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskPort_Startup" Id="{cc9fd284-9dc8-4b71-b09c-734a5ef100bf}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskPort_Startup : UINT
+]]></Declaration>
+      <Get Name="Get" Id="{b18b1fe3-f0cc-4fb9-ac66-6ace2255d3dd}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ContextInfoArr_0_TaskPort_Startup := stInitData.ContextInfoArr_0_TaskPort;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{b6506f1b-868c-4409-899e-dc1d34d804f6}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.ContextInfoArr_0_TaskPort := ContextInfoArr_0_TaskPort_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskPriority_Online" Id="{a8136a0a-a77f-4c59-8d24-942d8a07ec55}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskPriority_Online : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{72229296-81eb-46a4-a6a6-99aa8ab5982f}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#03002070,sizeof(ContextInfoArr_0_TaskPriority_Online),adr(ContextInfoArr_0_TaskPriority_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{a4ca6cbf-6432-4bbd-845e-b06c5d13fd2a}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#03002070,sizeof(ContextInfoArr_0_TaskPriority_Online),adr(ContextInfoArr_0_TaskPriority_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskPriority_Startup" Id="{7b9bb818-0682-4305-a0e5-f23eb6346be2}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskPriority_Startup : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{f0d2565d-fa7c-4ed9-9080-014dfcecf779}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ContextInfoArr_0_TaskPriority_Startup := stInitData.ContextInfoArr_0_TaskPriority;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{e251f7df-6121-4fbd-bc7a-0ec99702a0f7}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.ContextInfoArr_0_TaskPriority := ContextInfoArr_0_TaskPriority_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskSortOrder_Online" Id="{5b23793b-1c27-4be9-b522-eb3f2ff89408}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskSortOrder_Online : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{6f5285c5-db1b-416f-bb42-12150dce00fe}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#030020b0,sizeof(ContextInfoArr_0_TaskSortOrder_Online),adr(ContextInfoArr_0_TaskSortOrder_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{f4dfc221-c79b-42c4-a2ed-14d9bedf1575}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#030020b0,sizeof(ContextInfoArr_0_TaskSortOrder_Online),adr(ContextInfoArr_0_TaskSortOrder_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ContextInfoArr_0_TaskSortOrder_Startup" Id="{0f69cb81-e6de-428a-b12e-ad5826e7206f}">
+      <Declaration><![CDATA[PROPERTY ContextInfoArr_0_TaskSortOrder_Startup : UDINT
+]]></Declaration>
+      <Get Name="Get" Id="{fbe1dac8-4b4c-45bb-a1e2-1ba4d02896ea}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ContextInfoArr_0_TaskSortOrder_Startup := stInitData.ContextInfoArr_0_TaskSortOrder;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{e726351e-b18d-4095-bda6-3f7ac36efe97}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.ContextInfoArr_0_TaskSortOrder := ContextInfoArr_0_TaskSortOrder_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="CycleUpdateExecuted_Online" Id="{c6b38c4c-34bb-4c88-8bce-b27a61d5c570}">
+      <Declaration><![CDATA[PROPERTY CycleUpdateExecuted_Online : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{bf022793-dc0c-4ece-8077-b6b6999ebd8f}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#00000004,sizeof(CycleUpdateExecuted_Online),adr(CycleUpdateExecuted_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8367f438-6344-488b-aa47-c163814e7da7}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#00000004,sizeof(CycleUpdateExecuted_Online),adr(CycleUpdateExecuted_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Execute" Id="{119ca8b4-cd1f-4ddd-9d0a-9b9df3e6d275}">
+      <Declaration><![CDATA[METHOD Execute : HRESULT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IF (SUCCEEDED(hResult)) THEN
+  hResult := VerifyParameters();
+END_IF
+
+// update DataArea information
+SetDataAreaInfo(ADR(arrDataAreas),2);
+arrDataAreas[1].nDataAreaId := 0;
+arrDataAreas[1].nSize := SIZEOF(stInput);
+arrDataAreas[1].pPlcVar := ADR(stInput);
+arrDataAreas[1].pModuleProcImg := 0;
+arrDataAreas[1].eDataAreaType := E_TcMatSimDataAreaType.InputDst;
+arrDataAreas[2].nDataAreaId := 1;
+arrDataAreas[2].nSize := SIZEOF(stOutput);
+arrDataAreas[2].pPlcVar := ADR(stOutput);
+arrDataAreas[2].pModuleProcImg := 0;
+arrDataAreas[2].eDataAreaType := E_TcMatSimDataAreaType.OutputSrc;
+
+	
+// call base method
+Execute := SUPER^.Execute();
+                  ]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ExecuteModelCode_Online" Id="{52e5636e-a4bb-430b-8366-87e116091c30}">
+      <Declaration><![CDATA[PROPERTY ExecuteModelCode_Online : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{8efc7d7a-92af-47a6-a4ad-5aea3300f16b}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#00000007,sizeof(ExecuteModelCode_Online),adr(ExecuteModelCode_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8fe474e7-a3b6-42c6-ad3d-1edf3e311796}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#00000007,sizeof(ExecuteModelCode_Online),adr(ExecuteModelCode_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ExecuteModelCode_Startup" Id="{3ae95c1d-1923-4d9a-9474-4d2fb51f440b}">
+      <Declaration><![CDATA[PROPERTY ExecuteModelCode_Startup : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{91020dac-8469-456e-9adf-2f94cef3cbf9}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ExecuteModelCode_Startup := stInitData.ExecuteModelCode;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{3f5a239c-d163-4a27-b8e2-95ccb22ea09f}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.ExecuteModelCode := ExecuteModelCode_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ExecutionSequence_Online" Id="{d6ba59f3-8f1c-49aa-a3b7-e9f2c1f8dd0b}">
+      <Declaration><![CDATA[PROPERTY ExecutionSequence_Online : TctModuleExecutionSequenceType
+]]></Declaration>
+      <Get Name="Get" Id="{5cca49b3-532b-4deb-b337-9034ff957e26}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#00000001,sizeof(ExecutionSequence_Online),adr(ExecutionSequence_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{76a68244-3315-4f05-b879-01d16cb36ee3}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#00000001,sizeof(ExecutionSequence_Online),adr(ExecutionSequence_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ExecutionSequence_Startup" Id="{0bce24e6-836c-4deb-ab43-ed21468752a4}">
+      <Declaration><![CDATA[PROPERTY ExecutionSequence_Startup : TctModuleExecutionSequenceType
+]]></Declaration>
+      <Get Name="Get" Id="{fb2e5808-8ca5-4d77-963d-e3279fab2bf8}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ExecutionSequence_Startup := stInitData.ExecutionSequence;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{2055709f-18dc-4eb3-8d3b-96d23af4c35a}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.ExecutionSequence := ExecutionSequence_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="FB_init" Id="{fc2a7bf6-1dd8-48c9-b08d-045de216ed14}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	/// if TRUE, the retain variables are initialized (warm start / cold start)
+	bInitRetains: BOOL;
+	/// if TRUE, the instance afterwards gets moved into the copy code (online change)
+	bInCopyCode: BOOL;
+	oid: OTCID;
+END_VAR
+VAR
+	clsId: CLSID;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+// initialize flags
+bParametersVerified := false;
+                    
+// set module class id for compatibility check
+clsId.Data1 := 16#dc3905a3;
+clsId.Data2 := 16#3c10;
+clsId.Data3 := 16#463f;
+clsId.Data4[0] := 16#97;
+clsId.Data4[1] := 16#74;
+clsId.Data4[2] := 16#0a;
+clsId.Data4[3] := 16#63;
+clsId.Data4[4] := 16#82;
+clsId.Data4[5] := 16#3c;
+clsId.Data4[6] := 16#f9;
+clsId.Data4[7] := 16#4a;
+
+AssignClassId(clsId);
+                    
+// initialize InitData structure with default values              
+stInitData.CallByHdr.indexGroup := 0;
+stInitData.CallByHdr.indexOffset := 16#00000000;
+stInitData.CallByHdr.cbData := SIZEOF(stInitData.CallBy);
+stInitData.CallBy := TctModuleCallByType.Module;
+stInitData.ExecutionSequenceHdr.indexGroup := 0;
+stInitData.ExecutionSequenceHdr.indexOffset := 16#00000001;
+stInitData.ExecutionSequenceHdr.cbData := SIZEOF(stInitData.ExecutionSequence);
+stInitData.ExecutionSequence := TctModuleExecutionSequenceType.StateUpdateAfterOutputMapping;
+stInitData.StepSizeHdr.indexGroup := 0;
+stInitData.StepSizeHdr.indexOffset := 16#00000002;
+stInitData.StepSizeHdr.cbData := SIZEOF(stInitData.StepSize);
+stInitData.StepSize := TctStepSizeType.RequireMatchingTaskCycleTime;
+stInitData.ExecuteModelCodeHdr.indexGroup := 0;
+stInitData.ExecuteModelCodeHdr.indexOffset := 16#00000007;
+stInitData.ExecuteModelCodeHdr.cbData := SIZEOF(stInitData.ExecuteModelCode);
+stInitData.ExecuteModelCode := 1;
+stInitData.ModelParametersHdr.indexGroup := 0;
+stInitData.ModelParametersHdr.indexOffset := 16#83000000;
+stInitData.ModelParametersHdr.cbData := SIZEOF(stInitData.ModelParameters);
+stInitData.ModelParameters.A_01 := 20;
+stInitData.ModelParameters.a := 2;
+stInitData.ModelParameters.b := 5;
+stInitData.ModelParameters.DefuzzifyOutputs_SimulateUsing := 1;
+stInitData.ModelParameters.EvaluateRuleAntecedents_Simulat := 1;
+stInitData.ModelParameters.EvaluateRuleConsequents_Simulat := 1;
+stInitData.ModelParameters.OutputSamplePoints_Value[0] := -6;
+stInitData.ModelParameters.OutputSamplePoints_Value[1] := -6;
+stInitData.ModelParameters.OutputSamplePoints_Value[2] := -6;
+stInitData.ModelParameters.OutputSamplePoints_Value[3] := -5.8799999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[4] := -5.8799999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[5] := -5.8799999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[6] := -5.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[7] := -5.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[8] := -5.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[9] := -5.6399999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[10] := -5.6399999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[11] := -5.6399999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[12] := -5.5199999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[13] := -5.5199999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[14] := -5.5199999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[15] := -5.4000000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[16] := -5.4000000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[17] := -5.4000000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[18] := -5.2800000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[19] := -5.2800000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[20] := -5.2800000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[21] := -5.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[22] := -5.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[23] := -5.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[24] := -5.04;
+stInitData.ModelParameters.OutputSamplePoints_Value[25] := -5.04;
+stInitData.ModelParameters.OutputSamplePoints_Value[26] := -5.04;
+stInitData.ModelParameters.OutputSamplePoints_Value[27] := -4.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[28] := -4.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[29] := -4.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[30] := -4.7999999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[31] := -4.7999999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[32] := -4.7999999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[33] := -4.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[34] := -4.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[35] := -4.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[36] := -4.5600000000000005;
+stInitData.ModelParameters.OutputSamplePoints_Value[37] := -4.5600000000000005;
+stInitData.ModelParameters.OutputSamplePoints_Value[38] := -4.5600000000000005;
+stInitData.ModelParameters.OutputSamplePoints_Value[39] := -4.4399999999999995;
+stInitData.ModelParameters.OutputSamplePoints_Value[40] := -4.4399999999999995;
+stInitData.ModelParameters.OutputSamplePoints_Value[41] := -4.4399999999999995;
+stInitData.ModelParameters.OutputSamplePoints_Value[42] := -4.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[43] := -4.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[44] := -4.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[45] := -4.2000000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[46] := -4.2000000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[47] := -4.2000000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[48] := -4.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[49] := -4.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[50] := -4.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[51] := -3.96;
+stInitData.ModelParameters.OutputSamplePoints_Value[52] := -3.96;
+stInitData.ModelParameters.OutputSamplePoints_Value[53] := -3.96;
+stInitData.ModelParameters.OutputSamplePoints_Value[54] := -3.8399999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[55] := -3.8399999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[56] := -3.8399999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[57] := -3.7200000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[58] := -3.7200000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[59] := -3.7200000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[60] := -3.6000000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[61] := -3.6000000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[62] := -3.6000000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[63] := -3.48;
+stInitData.ModelParameters.OutputSamplePoints_Value[64] := -3.48;
+stInitData.ModelParameters.OutputSamplePoints_Value[65] := -3.48;
+stInitData.ModelParameters.OutputSamplePoints_Value[66] := -3.3599999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[67] := -3.3599999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[68] := -3.3599999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[69] := -3.2400000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[70] := -3.2400000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[71] := -3.2400000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[72] := -3.1200000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[73] := -3.1200000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[74] := -3.1200000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[75] := -3;
+stInitData.ModelParameters.OutputSamplePoints_Value[76] := -3;
+stInitData.ModelParameters.OutputSamplePoints_Value[77] := -3;
+stInitData.ModelParameters.OutputSamplePoints_Value[78] := -2.8799999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[79] := -2.8799999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[80] := -2.8799999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[81] := -2.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[82] := -2.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[83] := -2.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[84] := -2.6400000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[85] := -2.6400000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[86] := -2.6400000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[87] := -2.52;
+stInitData.ModelParameters.OutputSamplePoints_Value[88] := -2.52;
+stInitData.ModelParameters.OutputSamplePoints_Value[89] := -2.52;
+stInitData.ModelParameters.OutputSamplePoints_Value[90] := -2.3999999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[91] := -2.3999999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[92] := -2.3999999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[93] := -2.2799999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[94] := -2.2799999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[95] := -2.2799999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[96] := -2.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[97] := -2.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[98] := -2.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[99] := -2.04;
+stInitData.ModelParameters.OutputSamplePoints_Value[100] := -2.04;
+stInitData.ModelParameters.OutputSamplePoints_Value[101] := -2.04;
+stInitData.ModelParameters.OutputSamplePoints_Value[102] := -1.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[103] := -1.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[104] := -1.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[105] := -1.7999999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[106] := -1.7999999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[107] := -1.7999999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[108] := -1.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[109] := -1.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[110] := -1.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[111] := -1.5599999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[112] := -1.5599999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[113] := -1.5599999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[114] := -1.4400000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[115] := -1.4400000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[116] := -1.4400000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[117] := -1.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[118] := -1.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[119] := -1.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[120] := -1.2000000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[121] := -1.2000000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[122] := -1.2000000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[123] := -1.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[124] := -1.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[125] := -1.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[126] := -0.95999999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[127] := -0.95999999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[128] := -0.95999999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[129] := -0.83999999999999986;
+stInitData.ModelParameters.OutputSamplePoints_Value[130] := -0.83999999999999986;
+stInitData.ModelParameters.OutputSamplePoints_Value[131] := -0.83999999999999986;
+stInitData.ModelParameters.OutputSamplePoints_Value[132] := -0.71999999999999975;
+stInitData.ModelParameters.OutputSamplePoints_Value[133] := -0.71999999999999975;
+stInitData.ModelParameters.OutputSamplePoints_Value[134] := -0.71999999999999975;
+stInitData.ModelParameters.OutputSamplePoints_Value[135] := -0.59999999999999964;
+stInitData.ModelParameters.OutputSamplePoints_Value[136] := -0.59999999999999964;
+stInitData.ModelParameters.OutputSamplePoints_Value[137] := -0.59999999999999964;
+stInitData.ModelParameters.OutputSamplePoints_Value[138] := -0.48000000000000043;
+stInitData.ModelParameters.OutputSamplePoints_Value[139] := -0.48000000000000043;
+stInitData.ModelParameters.OutputSamplePoints_Value[140] := -0.48000000000000043;
+stInitData.ModelParameters.OutputSamplePoints_Value[141] := -0.36000000000000032;
+stInitData.ModelParameters.OutputSamplePoints_Value[142] := -0.36000000000000032;
+stInitData.ModelParameters.OutputSamplePoints_Value[143] := -0.36000000000000032;
+stInitData.ModelParameters.OutputSamplePoints_Value[144] := -0.24000000000000021;
+stInitData.ModelParameters.OutputSamplePoints_Value[145] := -0.24000000000000021;
+stInitData.ModelParameters.OutputSamplePoints_Value[146] := -0.24000000000000021;
+stInitData.ModelParameters.OutputSamplePoints_Value[147] := -0.12000000000000011;
+stInitData.ModelParameters.OutputSamplePoints_Value[148] := -0.12000000000000011;
+stInitData.ModelParameters.OutputSamplePoints_Value[149] := -0.12000000000000011;
+stInitData.ModelParameters.OutputSamplePoints_Value[150] := 0;
+stInitData.ModelParameters.OutputSamplePoints_Value[151] := 0;
+stInitData.ModelParameters.OutputSamplePoints_Value[152] := 0;
+stInitData.ModelParameters.OutputSamplePoints_Value[153] := 0.12000000000000011;
+stInitData.ModelParameters.OutputSamplePoints_Value[154] := 0.12000000000000011;
+stInitData.ModelParameters.OutputSamplePoints_Value[155] := 0.12000000000000011;
+stInitData.ModelParameters.OutputSamplePoints_Value[156] := 0.24000000000000021;
+stInitData.ModelParameters.OutputSamplePoints_Value[157] := 0.24000000000000021;
+stInitData.ModelParameters.OutputSamplePoints_Value[158] := 0.24000000000000021;
+stInitData.ModelParameters.OutputSamplePoints_Value[159] := 0.36000000000000032;
+stInitData.ModelParameters.OutputSamplePoints_Value[160] := 0.36000000000000032;
+stInitData.ModelParameters.OutputSamplePoints_Value[161] := 0.36000000000000032;
+stInitData.ModelParameters.OutputSamplePoints_Value[162] := 0.48000000000000043;
+stInitData.ModelParameters.OutputSamplePoints_Value[163] := 0.48000000000000043;
+stInitData.ModelParameters.OutputSamplePoints_Value[164] := 0.48000000000000043;
+stInitData.ModelParameters.OutputSamplePoints_Value[165] := 0.59999999999999964;
+stInitData.ModelParameters.OutputSamplePoints_Value[166] := 0.59999999999999964;
+stInitData.ModelParameters.OutputSamplePoints_Value[167] := 0.59999999999999964;
+stInitData.ModelParameters.OutputSamplePoints_Value[168] := 0.71999999999999975;
+stInitData.ModelParameters.OutputSamplePoints_Value[169] := 0.71999999999999975;
+stInitData.ModelParameters.OutputSamplePoints_Value[170] := 0.71999999999999975;
+stInitData.ModelParameters.OutputSamplePoints_Value[171] := 0.83999999999999986;
+stInitData.ModelParameters.OutputSamplePoints_Value[172] := 0.83999999999999986;
+stInitData.ModelParameters.OutputSamplePoints_Value[173] := 0.83999999999999986;
+stInitData.ModelParameters.OutputSamplePoints_Value[174] := 0.95999999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[175] := 0.95999999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[176] := 0.95999999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[177] := 1.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[178] := 1.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[179] := 1.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[180] := 1.2000000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[181] := 1.2000000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[182] := 1.2000000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[183] := 1.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[184] := 1.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[185] := 1.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[186] := 1.4400000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[187] := 1.4400000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[188] := 1.4400000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[189] := 1.5599999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[190] := 1.5599999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[191] := 1.5599999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[192] := 1.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[193] := 1.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[194] := 1.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[195] := 1.7999999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[196] := 1.7999999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[197] := 1.7999999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[198] := 1.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[199] := 1.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[200] := 1.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[201] := 2.0399999999999991;
+stInitData.ModelParameters.OutputSamplePoints_Value[202] := 2.0399999999999991;
+stInitData.ModelParameters.OutputSamplePoints_Value[203] := 2.0399999999999991;
+stInitData.ModelParameters.OutputSamplePoints_Value[204] := 2.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[205] := 2.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[206] := 2.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[207] := 2.2799999999999994;
+stInitData.ModelParameters.OutputSamplePoints_Value[208] := 2.2799999999999994;
+stInitData.ModelParameters.OutputSamplePoints_Value[209] := 2.2799999999999994;
+stInitData.ModelParameters.OutputSamplePoints_Value[210] := 2.4000000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[211] := 2.4000000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[212] := 2.4000000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[213] := 2.5199999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[214] := 2.5199999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[215] := 2.5199999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[216] := 2.6400000000000006;
+stInitData.ModelParameters.OutputSamplePoints_Value[217] := 2.6400000000000006;
+stInitData.ModelParameters.OutputSamplePoints_Value[218] := 2.6400000000000006;
+stInitData.ModelParameters.OutputSamplePoints_Value[219] := 2.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[220] := 2.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[221] := 2.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[222] := 2.8800000000000008;
+stInitData.ModelParameters.OutputSamplePoints_Value[223] := 2.8800000000000008;
+stInitData.ModelParameters.OutputSamplePoints_Value[224] := 2.8800000000000008;
+stInitData.ModelParameters.OutputSamplePoints_Value[225] := 3;
+stInitData.ModelParameters.OutputSamplePoints_Value[226] := 3;
+stInitData.ModelParameters.OutputSamplePoints_Value[227] := 3;
+stInitData.ModelParameters.OutputSamplePoints_Value[228] := 3.1199999999999992;
+stInitData.ModelParameters.OutputSamplePoints_Value[229] := 3.1199999999999992;
+stInitData.ModelParameters.OutputSamplePoints_Value[230] := 3.1199999999999992;
+stInitData.ModelParameters.OutputSamplePoints_Value[231] := 3.2400000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[232] := 3.2400000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[233] := 3.2400000000000002;
+stInitData.ModelParameters.OutputSamplePoints_Value[234] := 3.3599999999999994;
+stInitData.ModelParameters.OutputSamplePoints_Value[235] := 3.3599999999999994;
+stInitData.ModelParameters.OutputSamplePoints_Value[236] := 3.3599999999999994;
+stInitData.ModelParameters.OutputSamplePoints_Value[237] := 3.4800000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[238] := 3.4800000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[239] := 3.4800000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[240] := 3.5999999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[241] := 3.5999999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[242] := 3.5999999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[243] := 3.7200000000000006;
+stInitData.ModelParameters.OutputSamplePoints_Value[244] := 3.7200000000000006;
+stInitData.ModelParameters.OutputSamplePoints_Value[245] := 3.7200000000000006;
+stInitData.ModelParameters.OutputSamplePoints_Value[246] := 3.8399999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[247] := 3.8399999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[248] := 3.8399999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[249] := 3.9600000000000009;
+stInitData.ModelParameters.OutputSamplePoints_Value[250] := 3.9600000000000009;
+stInitData.ModelParameters.OutputSamplePoints_Value[251] := 3.9600000000000009;
+stInitData.ModelParameters.OutputSamplePoints_Value[252] := 4.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[253] := 4.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[254] := 4.0800000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[255] := 4.1999999999999993;
+stInitData.ModelParameters.OutputSamplePoints_Value[256] := 4.1999999999999993;
+stInitData.ModelParameters.OutputSamplePoints_Value[257] := 4.1999999999999993;
+stInitData.ModelParameters.OutputSamplePoints_Value[258] := 4.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[259] := 4.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[260] := 4.3200000000000003;
+stInitData.ModelParameters.OutputSamplePoints_Value[261] := 4.4399999999999995;
+stInitData.ModelParameters.OutputSamplePoints_Value[262] := 4.4399999999999995;
+stInitData.ModelParameters.OutputSamplePoints_Value[263] := 4.4399999999999995;
+stInitData.ModelParameters.OutputSamplePoints_Value[264] := 4.5600000000000005;
+stInitData.ModelParameters.OutputSamplePoints_Value[265] := 4.5600000000000005;
+stInitData.ModelParameters.OutputSamplePoints_Value[266] := 4.5600000000000005;
+stInitData.ModelParameters.OutputSamplePoints_Value[267] := 4.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[268] := 4.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[269] := 4.6799999999999997;
+stInitData.ModelParameters.OutputSamplePoints_Value[270] := 4.8000000000000007;
+stInitData.ModelParameters.OutputSamplePoints_Value[271] := 4.8000000000000007;
+stInitData.ModelParameters.OutputSamplePoints_Value[272] := 4.8000000000000007;
+stInitData.ModelParameters.OutputSamplePoints_Value[273] := 4.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[274] := 4.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[275] := 4.9199999999999999;
+stInitData.ModelParameters.OutputSamplePoints_Value[276] := 5.0399999999999991;
+stInitData.ModelParameters.OutputSamplePoints_Value[277] := 5.0399999999999991;
+stInitData.ModelParameters.OutputSamplePoints_Value[278] := 5.0399999999999991;
+stInitData.ModelParameters.OutputSamplePoints_Value[279] := 5.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[280] := 5.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[281] := 5.1600000000000001;
+stInitData.ModelParameters.OutputSamplePoints_Value[282] := 5.2799999999999994;
+stInitData.ModelParameters.OutputSamplePoints_Value[283] := 5.2799999999999994;
+stInitData.ModelParameters.OutputSamplePoints_Value[284] := 5.2799999999999994;
+stInitData.ModelParameters.OutputSamplePoints_Value[285] := 5.4000000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[286] := 5.4000000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[287] := 5.4000000000000004;
+stInitData.ModelParameters.OutputSamplePoints_Value[288] := 5.5199999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[289] := 5.5199999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[290] := 5.5199999999999996;
+stInitData.ModelParameters.OutputSamplePoints_Value[291] := 5.6400000000000006;
+stInitData.ModelParameters.OutputSamplePoints_Value[292] := 5.6400000000000006;
+stInitData.ModelParameters.OutputSamplePoints_Value[293] := 5.6400000000000006;
+stInitData.ModelParameters.OutputSamplePoints_Value[294] := 5.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[295] := 5.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[296] := 5.7599999999999998;
+stInitData.ModelParameters.OutputSamplePoints_Value[297] := 5.8800000000000008;
+stInitData.ModelParameters.OutputSamplePoints_Value[298] := 5.8800000000000008;
+stInitData.ModelParameters.OutputSamplePoints_Value[299] := 5.8800000000000008;
+stInitData.ModelParameters.OutputSamplePoints_Value[300] := 6;
+stInitData.ModelParameters.OutputSamplePoints_Value[301] := 6;
+stInitData.ModelParameters.OutputSamplePoints_Value[302] := 6;
+stInitData.ModelParameters.H_IC := 1;
+stInitData.ModelParameters.H_UpperSat := 1.7976931348623157e+308;
+stInitData.ModelParameters.H_LowerSat := 0;
+stInitData.ModelParameters.Ke_Gain := 0.01;
+stInitData.ModelParameters.Kec_Gain := 0.01;
+stInitData.ModelParameters.K1_Gain := 0.5;
+stInitData.ModelParameters.K2_Gain := 0.01;
+stInitData.ModelParameters.kp0_Value := 0.208480938103529;
+stInitData.ModelParameters.ki0_Value := 0.031284128435613602;
+stInitData.ModelParameters.Integrator1_IC := 0;
+stInitData.ContextInfoArr_0_TaskOidHdr.indexGroup := 0;
+stInitData.ContextInfoArr_0_TaskOidHdr.indexOffset := 16#03002060;
+stInitData.ContextInfoArr_0_TaskOidHdr.cbData := SIZEOF(stInitData.ContextInfoArr_0_TaskOid);
+stInitData.ContextInfoArr_0_TaskPriorityHdr.indexGroup := 0;
+stInitData.ContextInfoArr_0_TaskPriorityHdr.indexOffset := 16#03002070;
+stInitData.ContextInfoArr_0_TaskPriorityHdr.cbData := SIZEOF(stInitData.ContextInfoArr_0_TaskPriority);
+stInitData.ContextInfoArr_0_TaskCycleTimeNsHdr.indexGroup := 0;
+stInitData.ContextInfoArr_0_TaskCycleTimeNsHdr.indexOffset := 16#03002080;
+stInitData.ContextInfoArr_0_TaskCycleTimeNsHdr.cbData := SIZEOF(stInitData.ContextInfoArr_0_TaskCycleTimeNs);
+stInitData.ContextInfoArr_0_TaskPortHdr.indexGroup := 0;
+stInitData.ContextInfoArr_0_TaskPortHdr.indexOffset := 16#03002090;
+stInitData.ContextInfoArr_0_TaskPortHdr.cbData := SIZEOF(stInitData.ContextInfoArr_0_TaskPort);
+stInitData.ContextInfoArr_0_TaskSortOrderHdr.indexGroup := 0;
+stInitData.ContextInfoArr_0_TaskSortOrderHdr.indexOffset := 16#030020b0;
+stInitData.ContextInfoArr_0_TaskSortOrderHdr.cbData := SIZEOF(stInitData.ContextInfoArr_0_TaskSortOrder);
+stInitData.Header.cbData := SIZEOF(stInitData)-SIZEOF(stInitData.Header);
+stInitData.Header.uiElmCnt := 10;
+
+
+// set pointer to InitData structure
+SetInitDataInfo(ADR(stInitData));
+
+// set DataArea information
+SetDataAreaInfo(ADR(arrDataAreas),2);
+arrDataAreas[1].nDataAreaId := 0;
+arrDataAreas[1].nSize := SIZEOF(stInput);
+arrDataAreas[1].pPlcVar := ADR(stInput);
+arrDataAreas[1].pModuleProcImg := 0;
+arrDataAreas[1].eDataAreaType := E_TcMatSimDataAreaType.InputDst;
+arrDataAreas[2].nDataAreaId := 1;
+arrDataAreas[2].nSize := SIZEOF(stOutput);
+arrDataAreas[2].pPlcVar := ADR(stOutput);
+arrDataAreas[2].pModuleProcImg := 0;
+arrDataAreas[2].eDataAreaType := E_TcMatSimDataAreaType.OutputSrc;
+
+
+// initialize basic interface pointers and return
+FB_init := SUCCEEDED(Init(oid));
+                  ]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="InitData" Id="{4a3223e9-ee55-46cb-9578-823cc2c2e9f5}">
+      <Declaration><![CDATA[PROPERTY InitData : ST_AdaptiveModelInitData
+]]></Declaration>
+      <Get Name="Get" Id="{d43e5a1f-5b0f-4f89-9ee1-3bca8820a623}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[InitData := stInitData;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{3c91e027-e4cc-458f-8676-59304b55e1b1}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData := InitData;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Input_Online" Id="{c5fac901-8fce-455a-a078-b589921edb9f}">
+      <Declaration><![CDATA[PROPERTY Input_Online : ExtU_AdaptiveModel_T
+]]></Declaration>
+      <Get Name="Get" Id="{6bd425c5-bb8d-4218-803c-7a53db02c639}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#80000000,sizeof(Input_Online),adr(Input_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{b6aabdc0-a328-41e6-ae27-34a617c1bedb}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#80000000,sizeof(Input_Online),adr(Input_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Internal_SetObjState" Id="{c31b4965-fb39-42dc-a1f3-ce87444a63d3}">
+      <Declaration><![CDATA[{attribute 'object_name' := 'Internal_SetObjState'}
+METHOD PROTECTED Internal_SetObjState
+VAR_INPUT
+	hr: REFERENCE TO HRESULT;
+	nextState: TCOM_STATE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+// update pointer to InitData structure
+SetInitDataInfo(ADR(stInitData));
+// call base method
+SUPER^.Internal_SetObjState(hr,nextState);
+                  ]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="MdlInitialized_Online" Id="{4e49767b-bdd8-401d-a980-0849d917cec1}">
+      <Declaration><![CDATA[PROPERTY MdlInitialized_Online : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{df443016-d5c4-4723-af40-abc242283b6d}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#00000003,sizeof(MdlInitialized_Online),adr(MdlInitialized_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c96162a9-b042-4e79-92d2-85154b90acd3}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#00000003,sizeof(MdlInitialized_Online),adr(MdlInitialized_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ModelParameters_Online" Id="{710bccde-a0b0-486a-893c-ce1771e96728}">
+      <Declaration><![CDATA[PROPERTY ModelParameters_Online : P_AdaptiveModel_T
+]]></Declaration>
+      <Get Name="Get" Id="{1c4a873e-0414-4a26-a2e5-60a900f8501d}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#83000000,sizeof(ModelParameters_Online),adr(ModelParameters_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9f0399c6-79f4-4979-9bb0-51d619d37155}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#83000000,sizeof(ModelParameters_Online),adr(ModelParameters_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ModelParameters_Startup" Id="{14175673-3613-4462-b44c-92e193601785}">
+      <Declaration><![CDATA[PROPERTY ModelParameters_Startup : P_AdaptiveModel_T
+]]></Declaration>
+      <Get Name="Get" Id="{e71a3142-2c3a-44e9-a93e-f1aa207154b9}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ModelParameters_Startup := stInitData.ModelParameters;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{41143659-660b-4ac4-896a-e58e57e46c71}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.ModelParameters := ModelParameters_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ModuleBuildInfo_Online" Id="{2645018c-a11d-4ed6-9eb1-100967594fb5}">
+      <Declaration><![CDATA[PROPERTY ModuleBuildInfo_Online : TctModuleBuildInfoType
+]]></Declaration>
+      <Get Name="Get" Id="{dabe03bd-730e-4ba3-83e6-3295c269ebbc}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#00000006,sizeof(ModuleBuildInfo_Online),adr(ModuleBuildInfo_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{7a7616fd-a494-43ce-9fd3-218f46adbdd1}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#00000006,sizeof(ModuleBuildInfo_Online),adr(ModuleBuildInfo_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ModuleInfo_Online" Id="{29347ca9-7cae-4d41-91a8-e1b209be3130}">
+      <Declaration><![CDATA[PROPERTY ModuleInfo_Online : TctModuleInfoType
+]]></Declaration>
+      <Get Name="Get" Id="{1b12304b-cf94-4836-b0ef-da7603028a43}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#00000005,sizeof(ModuleInfo_Online),adr(ModuleInfo_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{88e856d4-83cf-4cad-b684-e607e1feffe9}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#00000005,sizeof(ModuleInfo_Online),adr(ModuleInfo_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="SaveOnlineParametersForInit" Id="{faa2f7f3-2b3c-4477-a138-c829c407ee64}">
+      <Declaration><![CDATA[{attribute 'object_name' := 'SaveOnlineParametersForInit'}
+METHOD SaveOnlineParametersForInit : HRESULT
+VAR
+	idx: UINT;
+	pInitElemHdr: POINTER TO TComInitDataElmHdr;
+	pData: PVOID;
+	nData: UDINT;
+END_VAR
+VAR CONSTANT
+	nInitDataAlignment: UDINT := 4;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+// update pointer to InitData structure
+SetInitDataInfo(ADR(stInitData));
+// call base method
+SaveOnlineParametersForInit := SUPER^.SaveOnlineParametersForInit();
+                  ]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SimulinkTime_Online" Id="{c425df5c-e74b-4c85-9794-87e53434bdac}">
+      <Declaration><![CDATA[PROPERTY SimulinkTime_Online : LREAL
+]]></Declaration>
+      <Get Name="Get" Id="{25932936-a368-4a5f-b90c-2cea3846111b}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#00000008,sizeof(SimulinkTime_Online),adr(SimulinkTime_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{b74c4294-71e0-4eff-a217-381b67565260}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#00000008,sizeof(SimulinkTime_Online),adr(SimulinkTime_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="StepSize_Online" Id="{e0425436-606a-4722-8c86-92b333958ef8}">
+      <Declaration><![CDATA[PROPERTY StepSize_Online : TctStepSizeType
+]]></Declaration>
+      <Get Name="Get" Id="{1c8662ff-da12-4b64-8852-090f3d32a891}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := GetObjPara(16#00000002,sizeof(StepSize_Online),adr(StepSize_Online));]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{071b7847-4c47-4cfc-a084-c96d504831ef}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[hResult := SetObjPara(16#00000002,sizeof(StepSize_Online),adr(StepSize_Online));]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="StepSize_Startup" Id="{3d425d51-ac2a-4b83-8944-b68e72f7f3dd}">
+      <Declaration><![CDATA[PROPERTY StepSize_Startup : TctStepSizeType
+]]></Declaration>
+      <Get Name="Get" Id="{e7981bea-3945-4010-bf63-f750894cac4a}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[StepSize_Startup := stInitData.StepSize;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{dd474819-02ba-40c5-b09a-b609fef03982}">
+        <Declaration><![CDATA[]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[stInitData.StepSize := StepSize_Startup;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="VerifyParameters" Id="{38c82e0e-069a-4535-84ab-fc246f7b13fd}">
+      <Declaration><![CDATA[{attribute 'object_name' := 'VerifyParameters'}
+METHOD PRIVATE VerifyParameters : HRESULT
+VAR
+	moduleCallByParam: TctModuleCallByType;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IF (bParametersVerified) THEN
+  VerifyParameters := Tc2_System.E_HRESULTAdsErr.HRESULT_ADS_NOERROR;
+ELSE
+  VerifyParameters := GetObjPara(stInitData.CallByHdr.indexOffset,SIZEOF(moduleCallByParam),ADR(moduleCallByParam));
+  
+  // check the "CallBy" parameter to be set to "Module"
+  IF (SUCCEEDED(VerifyParameters) AND (moduleCallByParam <> TctModuleCallByType.Module)) THEN
+      VerifyParameters := Tc2_System.E_HRESULTAdsErr.INVALIDPARM;
+  END_IF
+  
+  // set the parameters verified flag
+  bParametersVerified := SUCCEEDED(VerifyParameters);
+END_IF
+                  ]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_AdaptiveModel">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.CallBy_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.CallBy_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.CallBy_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.CallBy_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.CycleUpdateExecuted_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.CycleUpdateExecuted_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.Execute">
+      <LineId Id="3" Count="20" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ExecuteModelCode_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ExecuteModelCode_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ExecuteModelCode_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ExecuteModelCode_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ExecutionSequence_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ExecutionSequence_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ExecutionSequence_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ExecutionSequence_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.FB_init">
+      <LineId Id="3" Count="395" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.InitData.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.InitData.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.Input_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.Input_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.Internal_SetObjState">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.MdlInitialized_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.MdlInitialized_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ModelParameters_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ModelParameters_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ModelParameters_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ModelParameters_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ModuleBuildInfo_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ModuleBuildInfo_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ModuleInfo_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.ModuleInfo_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.SaveOnlineParametersForInit">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.SimulinkTime_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.SimulinkTime_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.StepSize_Online.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.StepSize_Online.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.StepSize_Startup.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.StepSize_Startup.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AdaptiveModel.VerifyParameters">
+      <LineId Id="3" Count="13" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

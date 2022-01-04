@@ -1,0 +1,215 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5f8413ac-791f-420b-987d-19ce17240977}</ProjectGuid>
+    <SubObjectsSortedByName>True</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>true</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>Adaptive</Name>
+    <ProgramVersion>3.1.4023.0</ProgramVersion>
+    <Application>{c6fb604e-1fc9-429a-926d-48ebaf84228f}</Application>
+    <TypeSystem>{0d2c49c7-675f-4cce-b289-e728621e9bb6}</TypeSystem>
+    <Implicit_Task_Info>{04ea0e4f-8604-41e8-a1b8-839d462f5ba9}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{1191f9f4-61d6-48ce-a99c-a2eafc32e31f}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{d842466c-98c1-45ab-b6eb-cd3a66b800a7}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{2c9ddecd-643a-44fa-9c78-fcd0fa3f503a}</LibraryReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Model\E_TcMatSimDataAreaType.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\FB_AdaptiveModel.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\FB_TcMatSimObject.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\ST_AdaptiveModelInitData.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\ST_AdaptiveModel_Input.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\ST_AdaptiveModel_Output.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\ST_TcMatSimObjectDataAreaInfo.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\ModelExecution.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DUTs" />
+    <Folder Include="GVLs" />
+    <Folder Include="Model" />
+    <Folder Include="VISUs" />
+    <Folder Include="POUs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SubObject Include="FB_AdaptiveModel.CallBy_Online" />
+    <SubObject Include="FB_AdaptiveModel.CallBy_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.CallBy_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.CallBy_Startup" />
+    <SubObject Include="FB_AdaptiveModel.CallBy_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.CallBy_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Online" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Startup" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskCycleTimeNs_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Online" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Startup" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskOid_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Online" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Startup" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPort_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Online" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Startup" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskPriority_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Online" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Startup" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.ContextInfoArr_0_TaskSortOrder_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.CycleUpdateExecuted_Online" />
+    <SubObject Include="FB_AdaptiveModel.CycleUpdateExecuted_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.CycleUpdateExecuted_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.Execute" />
+    <SubObject Include="FB_AdaptiveModel.ExecuteModelCode_Online" />
+    <SubObject Include="FB_AdaptiveModel.ExecuteModelCode_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ExecuteModelCode_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ExecuteModelCode_Startup" />
+    <SubObject Include="FB_AdaptiveModel.ExecuteModelCode_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.ExecuteModelCode_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.ExecutionSequence_Online" />
+    <SubObject Include="FB_AdaptiveModel.ExecutionSequence_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ExecutionSequence_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ExecutionSequence_Startup" />
+    <SubObject Include="FB_AdaptiveModel.ExecutionSequence_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.ExecutionSequence_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.FB_init" />
+    <SubObject Include="FB_AdaptiveModel.InitData" />
+    <SubObject Include="FB_AdaptiveModel.InitData.Get" />
+    <SubObject Include="FB_AdaptiveModel.InitData.Set" />
+    <SubObject Include="FB_AdaptiveModel.Input_Online" />
+    <SubObject Include="FB_AdaptiveModel.Input_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.Input_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.Internal_SetObjState" />
+    <SubObject Include="FB_AdaptiveModel.MdlInitialized_Online" />
+    <SubObject Include="FB_AdaptiveModel.MdlInitialized_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.MdlInitialized_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ModelParameters_Online" />
+    <SubObject Include="FB_AdaptiveModel.ModelParameters_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ModelParameters_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ModelParameters_Startup" />
+    <SubObject Include="FB_AdaptiveModel.ModelParameters_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.ModelParameters_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.ModuleBuildInfo_Online" />
+    <SubObject Include="FB_AdaptiveModel.ModuleBuildInfo_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ModuleBuildInfo_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.ModuleInfo_Online" />
+    <SubObject Include="FB_AdaptiveModel.ModuleInfo_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.ModuleInfo_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.SaveOnlineParametersForInit" />
+    <SubObject Include="FB_AdaptiveModel.SimulinkTime_Online" />
+    <SubObject Include="FB_AdaptiveModel.SimulinkTime_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.SimulinkTime_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.StepSize_Online" />
+    <SubObject Include="FB_AdaptiveModel.StepSize_Online.Get" />
+    <SubObject Include="FB_AdaptiveModel.StepSize_Online.Set" />
+    <SubObject Include="FB_AdaptiveModel.StepSize_Startup" />
+    <SubObject Include="FB_AdaptiveModel.StepSize_Startup.Get" />
+    <SubObject Include="FB_AdaptiveModel.StepSize_Startup.Set" />
+    <SubObject Include="FB_AdaptiveModel.VerifyParameters" />
+    <SubObject Include="FB_TcMatSimObject.AssignClassId" />
+    <SubObject Include="FB_TcMatSimObject.ClassId" />
+    <SubObject Include="FB_TcMatSimObject.ClassId.Get" />
+    <SubObject Include="FB_TcMatSimObject.Error" />
+    <SubObject Include="FB_TcMatSimObject.Error.Get" />
+    <SubObject Include="FB_TcMatSimObject.ErrorCode" />
+    <SubObject Include="FB_TcMatSimObject.ErrorCode.Get" />
+    <SubObject Include="FB_TcMatSimObject.Execute" />
+    <SubObject Include="FB_TcMatSimObject.FB_exit" />
+    <SubObject Include="FB_TcMatSimObject.FB_init" />
+    <SubObject Include="FB_TcMatSimObject.GetImagePtrs" />
+    <SubObject Include="FB_TcMatSimObject.GetObjPara" />
+    <SubObject Include="FB_TcMatSimObject.Init" />
+    <SubObject Include="FB_TcMatSimObject.InitObjName" />
+    <SubObject Include="FB_TcMatSimObject.Internal_SetObjState" />
+    <SubObject Include="FB_TcMatSimObject.QueryObjInterface" />
+    <SubObject Include="FB_TcMatSimObject.QueryObjInterfaces" />
+    <SubObject Include="FB_TcMatSimObject.QueryTcComInterface" />
+    <SubObject Include="FB_TcMatSimObject.ReadModuleClassId" />
+    <SubObject Include="FB_TcMatSimObject.ReleaseImagePtrs" />
+    <SubObject Include="FB_TcMatSimObject.ReleaseObjInterfaces" />
+    <SubObject Include="FB_TcMatSimObject.ReleaseTcComInterface" />
+    <SubObject Include="FB_TcMatSimObject.ResetHresult" />
+    <SubObject Include="FB_TcMatSimObject.SaveOnlineParametersForInit" />
+    <SubObject Include="FB_TcMatSimObject.SetDataAreaInfo" />
+    <SubObject Include="FB_TcMatSimObject.SetInitDataInfo" />
+    <SubObject Include="FB_TcMatSimObject.SetObjPara" />
+    <SubObject Include="FB_TcMatSimObject.SetObjState" />
+    <SubObject Include="FB_TcMatSimObject.State" />
+    <SubObject Include="FB_TcMatSimObject.State.Get" />
+    <SubObject Include="FB_TcMatSimObject.State.Set" />
+    <SubObject Include="FB_TcMatSimObject.VerifyClassId" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Adaptive.tmc">
+      <SubType>Content</SubType>
+    </None>
+  </ItemGroup>
+  <ProjectExtensions>
+    <PlcProjectOptions>
+      <XmlArchive>
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
+      <v n="Name">"&lt;ProjectRoot&gt;"</v>
+      <d n="SubKeys" t="Hashtable" />
+      <d n="Values" t="Hashtable" />
+    </o>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
+    </PlcProjectOptions>
+  </ProjectExtensions>
+</Project>
